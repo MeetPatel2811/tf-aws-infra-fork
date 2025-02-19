@@ -6,7 +6,7 @@
 This repository contains Terraform configurations for setting up infrastructure on AWS.
 
 ## Prerequisites
-- Install Terraform.
+- Install Terraform: https://developer.hashicorp.com/terraform/install?product_intent=terraform
 
 ## Setup
 1. Clone the Repository:
