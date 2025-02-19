@@ -1,4 +1,4 @@
-# Instructions for setting up infrastructure using Terraform on AWS.
+# Instructions for setting up infrastructure using Terraform on AWS
 
 
 
