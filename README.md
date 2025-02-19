@@ -15,4 +15,4 @@ This repository contains Terraform configurations for setting up infrastructure 
 2. Run below commands:
     - terraform init
     - terraform plan
-    - terraform apply
+    - terraform appl
