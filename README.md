@@ -13,6 +13,6 @@ This repository contains Terraform configurations for setting up infrastructure 
    ```bash
    git@github.com:git@github.com:Meet-CSYE-6225/tf-aws-infra.git
 2. Run below commands:
-    terraform init
-    terraform plan
-    terraform apply
+    - terraform init
+    - terraform plan
+    - terraform apply
