@@ -15,8 +15,7 @@ variable "vpc_names" {
   type        = map(string)
   default = {
     main = "CSYE-VPC1"
-    vpc2 = "CSYE-VPC2"
-    vpc3 = "CSYE-VPC3"
+
   }
 }
 
@@ -25,8 +24,6 @@ variable "vpc_cidrs" {
   type        = map(string)
   default = {
     main = "10.0.0.0/16"
-    vpc2 = "10.1.0.0/16"
-    vpc3 = "10.2.0.0/16"
   }
 }
 
@@ -35,8 +32,7 @@ variable "public_subnet_cidrs" {
   type        = map(list(string))
   default = {
     main = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-    vpc2 = ["10.1.1.0/24", "10.1.2.0/24", "10.1.3.0/24"]
-    vpc3 = ["10.2.1.0/24", "10.2.2.0/24", "10.2.3.0/24"]
+
   }
 }
 
@@ -45,8 +41,7 @@ variable "private_subnet_cidrs" {
   type        = map(list(string))
   default = {
     main = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
-    vpc2 = ["10.1.101.0/24", "10.1.102.0/24", "10.1.103.0/24"]
-    vpc3 = ["10.2.101.0/24", "10.2.102.0/24", "10.2.103.0/24"]
+
   }
 }
 
