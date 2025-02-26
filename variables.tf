@@ -13,7 +13,7 @@ variable "region" {
 variable "vpc_names" {
   description = "Map of VPC names"
   type        = map(string)
-  default     = {
+  default = {
     main = "CSYE-VPC1"
   }
 }
@@ -21,7 +21,7 @@ variable "vpc_names" {
 variable "vpc_cidrs" {
   description = "Map of CIDR blocks for the VPCs"
   type        = map(string)
-  default     = {
+  default = {
     main = "10.0.0.0/16"
   }
 }
@@ -29,7 +29,7 @@ variable "vpc_cidrs" {
 variable "public_subnet_cidrs" {
   description = "Map of lists of CIDRs for public subnets for each VPC"
   type        = map(list(string))
-  default     = {
+  default = {
     main = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   }
 }
@@ -37,7 +37,7 @@ variable "public_subnet_cidrs" {
 variable "private_subnet_cidrs" {
   description = "Map of lists of CIDRs for private subnets for each VPC"
   type        = map(list(string))
-  default     = {
+  default = {
     main = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
   }
 }
