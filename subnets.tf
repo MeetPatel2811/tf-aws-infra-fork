@@ -34,7 +34,7 @@ resource "aws_subnet" "public" {
 
   tags = {
     Name   = each.value.name
-    VpcKey = each.value.vpc_key // Optional: for clarity in the console
+    VpcKey = each.value.vpc_key
   }
 }
 
@@ -47,6 +47,6 @@ resource "aws_subnet" "private" {
 
   tags = {
     Name   = each.value.name
-    VpcKey = each.value.vpc_key // Optional: for clarity in the console
+    VpcKey = each.value.vpc_key
   }
 }
