@@ -12,3 +12,8 @@ output "private_subnet_ids" {
   description = "IDs of the private subnets"
   value       = [for s in aws_subnet.private : s.id]
 }
+
+output "web_instance_ami" {
+  description = "The AMI used by the web instance"
+  value       = aws_instance.web_instance.ami
+}
