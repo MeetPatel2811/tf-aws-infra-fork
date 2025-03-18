@@ -42,6 +42,18 @@ variable "private_subnet_cidrs" {
   }
 }
 
+variable "public_subnet_ids" {
+  description = "List of public subnet IDs (if created outside Terraform, otherwise leave empty)"
+  type        = list(string)
+  default     = []
+}
+
+variable "private_subnet_ids" {
+  description = "List of private subnet IDs (if created outside Terraform, otherwise leave empty)"
+  type        = list(string)
+  default     = []
+}
+
 variable "internet_gateway_name" {
   description = "Name tag for the Internet Gateway"
   type        = string
@@ -85,9 +97,9 @@ variable "instance_name" {
 }
 
 variable "custom_ami_id" {
-  description = "Custom AMI ID built via Packer (using a default AMI for now)"
+  description = "Custom AMI ID built via Packer"
   type        = string
-  default     = "ami-0dba2cb6798deb6d8"
+  default     = "ami-003e4e96ff28f8429"
 }
 
 variable "instance_type" {
@@ -115,7 +127,7 @@ variable "app_port" {
 }
 
 variable "vpc_id" {
-  description = "VPC ID"
+  description = "VPC ID (if created outside Terraform, otherwise generated in vpc.tf)"
   type        = string
   default     = ""
 }
@@ -124,4 +136,65 @@ variable "key_name" {
   description = "The name of the SSH key pair to use for the instance"
   type        = string
   default     = "Cloud_App"
+}
+
+# RDS and Database configuration variables
+variable "db_name" {
+  description = "Name of the database"
+  type        = string
+  default     = "csye6225"
+}
+
+variable "db_user" {
+  description = "Database master username"
+  type        = string
+  default     = "csye6225"
+}
+
+variable "dialect" {
+  description = "Database dialect to use"
+  type        = string
+  default     = "postgres"
+}
+
+variable "db_password" {
+  description = "Master password for RDS"
+  type        = string
+  default     = "Root@123"
+}
+
+variable "db_engine" {
+  description = "Database engine"
+  type        = string
+  default     = "postgres"
+}
+
+variable "db_instance_class" {
+  description = "RDS instance class"
+  type        = string
+  default     = "db.t2.micro"
+}
+
+variable "db_port" {
+  description = "Database port"
+  type        = number
+  default     = 5432
+}
+
+variable "db_parameter_group_family" {
+  description = "DB parameter group family"
+  type        = string
+  default     = "postgres12"
+}
+
+variable "db_engine_version" {
+  description = "PostgreSQL engine version to use for the RDS instance"
+  type        = string
+  default     = "12.7"
+}
+
+variable "db_storage_type" {
+  description = "Storage type for the RDS instance"
+  type        = string
+  default     = "gp2"
 }
