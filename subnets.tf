@@ -5,7 +5,7 @@ locals {
         vpc_key           = vpc_key
         vpc_id            = vpc.id
         cidr_block        = cidr
-        availability_zone = var.availability_zones[idx]
+        availability_zone = var.availability_zones[idx % length(var.availability_zones)]
         name              = "${var.name_prefix}-public-${vpc.id}-${idx + 1}"
       }
     ]
@@ -17,7 +17,7 @@ locals {
         vpc_key           = vpc_key
         vpc_id            = vpc.id
         cidr_block        = cidr
-        availability_zone = var.availability_zones[idx]
+        availability_zone = var.availability_zones[idx % length(var.availability_zones)]
         name              = "${var.name_prefix}-private-${vpc.id}-${idx + 1}"
       }
     ]
