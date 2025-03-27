@@ -38,6 +38,11 @@ resource "aws_iam_role_policy_attachment" "web_s3_attach" {
   policy_arn = aws_iam_policy.s3_access_policy.arn
 }
 
+resource "aws_iam_role_policy_attachment" "cloudwatch_agent_attach" {
+  role       = aws_iam_role.web_instance_role.name
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+}
+
 resource "aws_iam_instance_profile" "web_instance_profile" {
   name = "${var.name_prefix}-web-profile"
   role = aws_iam_role.web_instance_role.name
