@@ -1,10 +1,12 @@
 resource "random_uuid" "s3_bucket_uuid" {}
 
 resource "aws_s3_bucket" "s3_bucket" {
-  bucket        = random_uuid.s3_bucket_uuid.result
+  bucket        = "csye-${formatdate("YYYYMMDD", timestamp())}-${random_uuid.s3_bucket_uuid.result}"
   force_destroy = true
   acl           = "private"
 }
+
+
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "sse_config" {
   bucket = aws_s3_bucket.s3_bucket.id
