@@ -43,6 +43,30 @@ resource "aws_iam_role_policy_attachment" "cloudwatch_agent_attach" {
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
 }
 
+resource "aws_iam_policy" "infrastructure_policy" {
+  name        = "${var.name_prefix}-infrastructure-policy"
+  description = "Policy to allow ELB and EC2 launch template operations"
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "elasticloadbalancing:CreateLoadBalancer",
+          "elasticloadbalancing:DescribeTargetGroups",
+          "ec2:CreateLaunchTemplate"
+        ],
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "infrastructure_policy_attach" {
+  role       = aws_iam_role.web_instance_role.name
+  policy_arn = aws_iam_policy.infrastructure_policy.arn
+}
+
 resource "aws_iam_instance_profile" "web_instance_profile" {
   name = "${var.name_prefix}-web-profile"
   role = aws_iam_role.web_instance_role.name
