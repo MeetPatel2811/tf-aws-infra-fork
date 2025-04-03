@@ -106,13 +106,13 @@ resource "aws_autoscaling_policy" "scale_down" {
 resource "aws_cloudwatch_metric_alarm" "cpu_alarm_high" {
   alarm_name          = "${var.name_prefix}-cpu-high"
   comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = 2
+  evaluation_periods  = var.cpu_high_evaluation_periods
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
-  period              = 60
+  period              = var.cpu_high_period
   statistic           = "Average"
-  threshold           = 5
-  alarm_description   = "Alarm when CPU exceeds 5%"
+  threshold           = var.cpu_high_threshold
+  alarm_description   = "Alarm when CPU exceeds ${var.cpu_high_threshold}%"
   dimensions = {
     AutoScalingGroupName = aws_autoscaling_group.web_asg.name
   }
@@ -122,13 +122,13 @@ resource "aws_cloudwatch_metric_alarm" "cpu_alarm_high" {
 resource "aws_cloudwatch_metric_alarm" "cpu_alarm_low" {
   alarm_name          = "${var.name_prefix}-cpu-low"
   comparison_operator = "LessThanThreshold"
-  evaluation_periods  = 2
+  evaluation_periods  = var.cpu_low_evaluation_periods
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
-  period              = 60
+  period              = var.cpu_low_period
   statistic           = "Average"
-  threshold           = 3
-  alarm_description   = "Alarm when CPU falls below 3%"
+  threshold           = var.cpu_low_threshold
+  alarm_description   = "Alarm when CPU falls below ${var.cpu_low_threshold}%"
   dimensions = {
     AutoScalingGroupName = aws_autoscaling_group.web_asg.name
   }
