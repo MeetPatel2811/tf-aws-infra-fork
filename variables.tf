@@ -198,3 +198,79 @@ variable "db_storage_type" {
   type        = string
   default     = "gp2"
 }
+variable "domain_name" {
+  description = "The custom domain name to use for Route53 records"
+  type        = string
+  default     = "example.com" # Replace with your actual domain
+}
+
+
+variable "subdomain" {
+  description = "The subdomain to create the record for (e.g. dev or demo)"
+  type        = string
+}
+variable "asg_min_size" {
+  description = "Minimum instances in the Auto Scaling Group"
+  type        = number
+  default     = 3
+}
+
+variable "asg_max_size" {
+  description = "Maximum instances in the Auto Scaling Group"
+  type        = number
+  default     = 5
+}
+
+variable "asg_desired_capacity" {
+  description = "Desired capacity for the Auto Scaling Group"
+  type        = number
+  default     = 3
+}
+
+variable "cooldown" {
+  description = "Cooldown period for autoscaling actions (in seconds)"
+  type        = number
+  default     = 60
+}
+
+variable "scale_up_adjustment" {
+  description = "Adjustment value for scaling up"
+  type        = number
+  default     = 1
+}
+
+variable "scale_down_adjustment" {
+  description = "Adjustment value for scaling down"
+  type        = number
+  default     = -1
+}
+
+variable "health_check_path" {
+  description = "Health check path for target group"
+  type        = string
+  default     = "/healthz"
+}
+
+variable "health_check_interval" {
+  description = "Interval (in seconds) for the health check"
+  type        = number
+  default     = 30
+}
+
+variable "health_check_timeout" {
+  description = "Timeout (in seconds) for the health check"
+  type        = number
+  default     = 5
+}
+
+variable "healthy_threshold" {
+  description = "Number of consecutive successful health checks required"
+  type        = number
+  default     = 2
+}
+
+variable "unhealthy_threshold" {
+  description = "Number of consecutive failed health checks required"
+  type        = number
+  default     = 2
+}
