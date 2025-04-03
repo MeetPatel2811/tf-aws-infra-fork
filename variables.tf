@@ -274,3 +274,40 @@ variable "unhealthy_threshold" {
   type        = number
   default     = 2
 }
+
+variable "cpu_high_evaluation_periods" {
+  description = "Evaluation periods for the high CPU alarm"
+  type        = number
+  default     = 2
+}
+
+variable "cpu_high_period" {
+  description = "Period (in seconds) for the high CPU alarm"
+  type        = number
+  default     = 60
+}
+
+variable "cpu_high_threshold" {
+  description = "CPU utilization threshold for the high alarm"
+  type        = number
+  default     = 5
+}
+
+variable "cpu_low_evaluation_periods" {
+  description = "Evaluation periods for the low CPU alarm"
+  type        = number
+  default     = 2
+}
+
+variable "cpu_low_period" {
+  description = "Period (in seconds) for the low CPU alarm"
+  type        = number
+  default     = 60
+}
+
+variable "cpu_low_threshold" {
+  description = "CPU utilization threshold for the low alarm"
+  type        = number
+  default     = 4
+}
+
