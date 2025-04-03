@@ -32,7 +32,7 @@ resource "aws_launch_template" "web_launch_template" {
         }
       },
       "metrics": {
-        "namespace": "CSYE6225/EC2/CloudWatch",
+        "namespace": "CSYE62257/EC2/CloudWatch",
         "metrics_collected": {
           "statsd": {
             "service_address": ":8125",
