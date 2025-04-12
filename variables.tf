@@ -311,3 +311,145 @@ variable "cpu_low_threshold" {
   default     = 4
 }
 
+variable "ec2_service_principal" {
+  description = "The service principal for EC2"
+  type        = string
+  default     = "ec2.amazonaws.com"
+}
+
+variable "s3_actions" {
+  description = "S3 actions allowed for EC2"
+  type        = list(string)
+  default = [
+    "s3:PutObject",
+    "s3:GetObject",
+    "s3:ListBucket",
+    "s3:DeleteObject"
+  ]
+}
+
+variable "infrastructure_actions" {
+  description = "Infrastructure actions for EC2, ASG, KMS, Secrets"
+  type        = list(string)
+  default = [
+    "elasticloadbalancing:CreateLoadBalancer",
+    "elasticloadbalancing:DescribeTargetGroups",
+    "ec2:CreateLaunchTemplate",
+    "ec2:DescribeLaunchTemplates",
+    "ec2:DescribeInstances",
+    "ec2:DescribeImages",
+    "ec2:DescribeVolumes",
+    "ec2:AttachVolume",
+    "ec2:CreateVolume",
+    "autoscaling:*",
+    "kms:Decrypt",
+    "kms:DescribeKey",
+    "secretsmanager:GetSecretValue",
+    "secretsmanager:DescribeSecret",
+
+  ]
+}
+
+variable "terraform_kms_secret_actions" {
+  description = "Actions required by Terraform IAM user to manage KMS and Secrets"
+  type        = list(string)
+  default = [
+    "kms:CreateKey",
+    "kms:PutKeyPolicy",
+    "kms:EnableKeyRotation",
+    "kms:TagResource",
+    "kms:DescribeKey",
+    "kms:ListKeys",
+    "secretsmanager:CreateSecret",
+    "secretsmanager:PutSecretValue",
+    "secretsmanager:GetSecretValue",
+    "secretsmanager:DescribeSecret",
+    "secretsmanager:TagResource",
+    "secretsmanager:GetResourcePolicy",
+  ]
+}
+
+variable "terraform_iam_user" {
+  description = "IAM username used to run terraform"
+  type        = string
+}
+
+variable "cloudwatch_agent_managed_policy_arn" {
+  description = "ARN of the AWS managed CloudWatch Agent policy"
+  type        = string
+  default     = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+}
+
+
+variable "demo_ssl_cert_arn" {
+  description = "SSL certificate ARN for DEMO (imported manually via CLI)"
+  type        = string
+}
+variable "account_id" {
+  description = "AWS account ID (used in KMS policies)"
+  type        = string
+}
+
+variable "cli_user" {
+  description = "IAM CLI user name used to apply Terraform"
+  type        = string
+}
+
+
+
+variable "asg_health_check_grace_period" {
+  description = "Time (in seconds) that Auto Scaling waits before checking instance health"
+  type        = number
+  default     = 300
+}
+
+variable "asg_health_check_type" {
+  description = "Type of health check for the Auto Scaling Group"
+  type        = string
+  default     = "ELB"
+}
+
+variable "asg_tag_key" {
+  description = "Tag key for Auto Scaling group instances"
+  type        = string
+  default     = "AutoScalingGroup"
+}
+
+variable "asg_tag_value" {
+  description = "Tag value for Auto Scaling group instances"
+  type        = string
+  default     = "csye6225_asg"
+}
+
+variable "asg_tag_propagate" {
+  description = "Whether to propagate tags to launched instances"
+  type        = bool
+  default     = true
+}
+
+
+
+variable "asg_instance_refresh_strategy" {
+  description = "Instance refresh strategy (e.g., Rolling)"
+  type        = string
+  default     = "Rolling"
+}
+
+variable "asg_min_healthy_percentage" {
+  description = "Minimum healthy instances percentage during instance refresh"
+  type        = number
+  default     = 90
+}
+
+variable "asg_instance_warmup" {
+  description = "Time (in seconds) after instance comes into service before it is considered healthy"
+  type        = number
+  default     = 300
+}
+
+variable "asg_instance_refresh_trigger" {
+  description = "The attribute that triggers instance refresh"
+  type        = string
+  default     = "launch_template"
+}
+
