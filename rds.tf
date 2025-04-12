@@ -53,6 +53,9 @@ resource "aws_db_instance" "csye6225_rds_instance" {
   publicly_accessible    = false
   multi_az               = false
   skip_final_snapshot    = true
+  storage_encrypted      = true
+  kms_key_id             = aws_kms_key.rds_key.arn
+
   tags = {
     Name = "csye6225-rds"
   }

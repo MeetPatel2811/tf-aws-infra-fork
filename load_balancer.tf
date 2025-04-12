@@ -38,7 +38,42 @@ resource "aws_lb_listener" "http_listener" {
   }
 }
 
-resource "aws_autoscaling_attachment" "asg_attachment" {
-  autoscaling_group_name = aws_autoscaling_group.web_asg.name
-  lb_target_group_arn    = aws_lb_target_group.web_target_group.arn
+# resource "aws_autoscaling_attachment" "asg_attachment" {
+#   autoscaling_group_name = aws_autoscaling_group.web_asg.name
+#   lb_target_group_arn    = aws_lb_target_group.web_target_group.arn
+#   depends_on             = [aws_lb_target_group.web_target_group]
+
+# }
+# resource "aws_acm_certificate" "dev_ssl" {
+#   domain_name       = "demo.meet2811.me"
+#   validation_method = "DNS"
+#   tags = {
+#     Environment = "dev"
+#   }
+# }
+
+# resource "aws_lb_listener" "dev_https" {
+#   load_balancer_arn = aws_lb.web_alb.arn
+#   port              = 443
+#   protocol          = "HTTPS"
+#   certificate_arn   = aws_acm_certificate.dev_ssl.arn
+#   ssl_policy        = "ELBSecurityPolicy-2016-08"
+
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.web_target_group.arn
+#   }
+# }
+
+resource "aws_lb_listener" "demo_https" {
+  load_balancer_arn = aws_lb.web_alb.arn
+  port              = 443
+  protocol          = "HTTPS"
+  certificate_arn   = var.demo_ssl_cert_arn
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.web_target_group.arn
+  }
 }
