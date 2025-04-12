@@ -70,7 +70,7 @@ resource "aws_iam_role_policy_attachment" "infrastructure_policy_attach" {
   policy_arn = aws_iam_policy.infrastructure_policy.arn
 }
 
-# --- ✅ NEW: IAM Policy for Terraform IAM User to Create KMS & Secrets ---
+# --- NEW: IAM Policy for Terraform IAM User to Create KMS & Secrets ---
 
 resource "aws_iam_policy" "terraform_kms_creator" {
   name        = "${var.name_prefix}-terraform-kms-access"
