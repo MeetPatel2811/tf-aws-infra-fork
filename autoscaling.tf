@@ -49,6 +49,16 @@ resource "aws_launch_template" "web_launch_template" {
     sudo systemctl restart csye6225.service
   EOT
   )
+  block_device_mappings {
+    device_name = "/dev/xvda"
+    ebs {
+      volume_size           = var.root_volume_size
+      volume_type           = var.root_volume_type
+      delete_on_termination = true
+      encrypted             = true
+      kms_key_id            = aws_kms_key.ebs.arn
+    }
+  }
 
   iam_instance_profile {
     name = aws_iam_instance_profile.web_instance_profile.name
@@ -65,11 +75,13 @@ resource "aws_launch_template" "web_launch_template" {
 }
 
 resource "aws_autoscaling_group" "web_asg" {
-  name                = "${var.name_prefix}-asg"
-  max_size            = var.asg_max_size
-  min_size            = var.asg_min_size
-  desired_capacity    = var.asg_desired_capacity
-  vpc_zone_identifier = [for s in aws_subnet.public : s.id]
+  name                      = "${var.name_prefix}-asg"
+  max_size                  = var.asg_max_size
+  min_size                  = var.asg_min_size
+  desired_capacity          = var.asg_desired_capacity
+  health_check_grace_period = var.asg_health_check_grace_period
+  health_check_type         = "ELB"
+  vpc_zone_identifier       = [for s in aws_subnet.public : s.id]
 
   launch_template {
     id      = aws_launch_template.web_launch_template.id
@@ -81,10 +93,22 @@ resource "aws_autoscaling_group" "web_asg" {
     value               = "csye6225_asg"
     propagate_at_launch = true
   }
-
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = var.asg_min_healthy_percentage
+      instance_warmup        = var.asg_instance_warmup
+    }
+    triggers = ["launch_template"]
+  }
   lifecycle {
     create_before_destroy = true
   }
+}
+
+resource "aws_autoscaling_attachment" "asg_attachment" {
+  autoscaling_group_name = aws_autoscaling_group.web_asg.name
+  lb_target_group_arn    = aws_lb_target_group.web_target_group.arn
 }
 
 resource "aws_autoscaling_policy" "scale_up" {
@@ -92,6 +116,7 @@ resource "aws_autoscaling_policy" "scale_up" {
   autoscaling_group_name = aws_autoscaling_group.web_asg.name
   scaling_adjustment     = var.scale_up_adjustment
   adjustment_type        = "ChangeInCapacity"
+  depends_on             = [aws_autoscaling_attachment.asg_attachment]
   cooldown               = var.cooldown
 }
 
